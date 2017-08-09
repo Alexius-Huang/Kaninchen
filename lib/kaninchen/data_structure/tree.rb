@@ -18,11 +18,14 @@ module Kaninchen
       node_type :tree
       tree_node_attr_reader :tree, :parent, :children
 
-      def <<(node)
-        if node.is_a? Kaninchen::DataStructure::Node and node.nil?
-          node.send(:set_tree_node_data, tree: self.tree, parent: self)
-          set_tree_node_data(children: @children.push(node))
+      def <<(params)
+        case
+        when (params.is_a?(Kaninchen::DataStructure::Node) and params.nil?)
+          params.send(:set_tree_node_data, tree: self.tree, parent: self)
+          set_tree_node_data(children: @children.push(params))
+        when params.is_a?(Array) then params.each { |node| self << node }
         end
+        self
       end
 
       def root?
