@@ -1,8 +1,11 @@
 # Kaninchen
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kaninchen`. To experiment with that code, run `bin/console` for an interactive prompt.
+Simple implementation of data structures (and algorithms in future) in Ruby programming language.
 
-TODO: Delete this and the text above, and describe your gem
+Currently support data structures:
+
+- Stacks
+- Tree
 
 ## Installation
 
@@ -20,9 +23,113 @@ Or install it yourself as:
 
     $ gem install kaninchen
 
-## Usage
+## Stack
 
-TODO: Write usage instructions here
+### Basic Usage
+
+```ruby
+# Creata a new stack data structure
+stack = Kaninchen::DataStructure::Stack.new
+
+# Use the push method to push in data
+stack.push(1)
+
+# Chained method is also allowed
+stack.push(2).push(3).push(4)
+
+# Or you can use the #<< method which is alias to push
+stack << 5 << 6 << 7
+
+# Check the size of the stack
+stack.size # -> 7
+
+# Pop out stack
+stack.pop # -> 7
+stack.pop # -> 6
+stack.pop # -> 5
+
+# Empty stack will pop out nil value
+empty_stack = Kaninchen::DataStructure::Stack.new
+empty_stack.pop # -> nil
+
+# Using bang method pop! in empty stack will raise error
+empty_stack.pop!
+# -> Kaninchen::PopEmptyStackError: Popping out empty stack
+```
+
+## Tree
+
+### Basic Usage
+
+```ruby
+# Create a new tree data structure and initialize the root node value
+tree = Kaninchen::DataStructure::Tree.new 'ROOT'
+tree.class # -> Kaninchen::DataStructure::Tree
+
+# Tree has a root node which holds the string value 'ROOT'
+tree.root.class # -> Kaninchen::DataStructure::Node
+tree.root.value # -> 'ROOT'
+
+# Root node is the root of the tree and is also a kind of tree node
+tree.root.root?      # -> true
+tree.root.tree_node? # -> true
+
+# Root node is not a nil node
+tree.root.nil? # -> false
+
+# Create a node which holds the value 'CHILD'
+node = Kaninchen::DataStructure::Node.new 'CHILD'
+
+# Node currently is not a tree node, which is also a kind of "nil node"
+node.tree_node? # -> false
+node.nil?       # -> true
+
+# Attach the node to the tree root node using the #<< method
+tree.root << node
+
+# Now the tree has a child node and the node's parent is the root node
+tree.root.children.size        # -> 1
+tree.root.children[0] === node # -> true
+node.parent === tree.root      # -> true
+
+# Now node is not nil node anymore, it belongs to the tree node
+node.nil?          # -> false
+node.tree_node?    # -> true
+node.tree === tree # -> true
+node.root?         # -> false
+```
+
+### Attaching Nodes
+
+Chained `#<<` method:
+
+```ruby
+# Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
+# are Kaninchen::DataStructure::Node type
+tree << n1 << n2 << n3
+tree.root.children.size      # -> 3
+tree.root.children[0] === n1 # -> true
+tree.root.children[1] === n2 # -> true
+tree.root.children[2] === n3 # -> true
+n1.parent === tree.root      # -> true
+n2.parent === tree.root      # -> true
+n3.parent === tree.root      # -> true
+```
+
+Array of nodes case:
+
+```ruby
+# Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
+# are Kaninchen::DataStructure::Node type
+tree << [n1, n2, n3]
+tree.root.children.size      # -> 3
+tree.root.children[0] === n1 # -> true
+tree.root.children[1] === n2 # -> true
+tree.root.children[2] === n3 # -> true
+n1.parent === tree.root      # -> true
+n2.parent === tree.root      # -> true
+n3.parent === tree.root      # -> true
+```
 
 ## Development
 
