@@ -3,9 +3,19 @@
 require 'spec_helper'
 
 RSpec.describe Kaninchen::DataStructure::Tree do
+  let(:tree) { described_class.new 'ROOT' }
+  let(:node) { Kaninchen::DataStructure::Node.new 'ROOT' }
+
   describe 'initialization' do
-    it 'can initialize with a root value'
-    it 'can initialize with a root value as node'
+    it 'can initialize with a root value' do
+      expect(tree.class).to eq described_class
+    end
+
+    it 'can initialize with a root value as node' do
+      tree = described_class.new node
+      expect(tree.class).to eq described_class
+    end
+
     it 'cannot initialize without root specified'
     it 'cannot initialize with a root value as node which is not tree type'
   end
@@ -35,7 +45,13 @@ RSpec.describe Kaninchen::DataStructure::Tree do
 
     describe 'tree properties' do
       context '#root' do
-        it 'returns the root node'
+        it 'returns the root node' do
+          root = tree.root
+          expect(root.class).to eq Kaninchen::DataStructure::Node
+          expect(root.tree_node?).to be_truthy
+          expect(root.root?).to be_truthy
+          expect(root.value).to eq 'ROOT'
+        end
       end
 
       context '#nodes' do

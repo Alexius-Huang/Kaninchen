@@ -10,3 +10,9 @@
 
 # rspec failure tracking
 .rspec_status
+
+# Ignore byebug history
+.byebug_history
+
+# Ignore cache file
+.DS_Store

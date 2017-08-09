@@ -10,6 +10,27 @@ module Kaninchen
           @value = params[:value]
         else
           @value = params
+          @type  = nil
+        end
+      end
+
+      def nil?
+        @type.nil?
+      end
+
+      class << self
+        def node_type(type)
+          define_method "#{type}_node?" do
+            @type === type
+          end
+
+          define_singleton_method "#{type}_node_attr_reader" do |*attrs|
+            attrs.each do |attr|
+              define_method attr do
+                send("#{type}_node?") ? instance_variable_get("@#{attr}") : nil
+              end
+            end
+          end
         end
       end
     end
