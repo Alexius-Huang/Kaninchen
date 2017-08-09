@@ -45,28 +45,5 @@ RSpec.describe Kaninchen::DataStructure::Node do
         end
       end
     end
-
-    describe 'tree type nodes' do
-      context '#root?' do
-        it 'should returns true if it is tree root node' do
-          root = Kaninchen::DataStructure::Tree.new('ROOT').root
-          expect(root.root?).to be_truthy
-        end
-      end
-
-      context '#tree_node?' do
-        it 'should returns true if it is tree node type' do
-          expect(tree_node.tree_node?).to be_truthy
-        end
-      end
-
-      context '#<<' do
-        it 'should append the input node as child node'
-        it 'should append the input nodes as child nodes via chained methods #<<'
-        it 'should append an array of nodes as child nodes'
-        it 'should append a hash structure of nodes as a subtree of the node'
-        it 'should append a tree type data structure as a subtree of the node'
-      end
-    end
   end
 end

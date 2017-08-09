@@ -20,7 +20,6 @@ module Kaninchen
 
       def <<(node)
         if node.is_a? Kaninchen::DataStructure::Node and node.nil?
-          # byebug
           node.send(:set_tree_node_data, tree: self.tree, parent: self)
           set_tree_node_data(children: @children.push(node))
         end
@@ -33,7 +32,6 @@ module Kaninchen
       private
 
       def set_tree_node_data(params)
-        # byebug
         @type     = :tree
         @tree     = params[:tree]
         @parent   = params[:parent]
