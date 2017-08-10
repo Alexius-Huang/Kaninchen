@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'kaninchen/data_structure/tree/nodes'
+
 module Kaninchen
   module DataStructure
     class Tree
@@ -23,7 +25,7 @@ module Kaninchen
 
       def each_node_with_index(type = :preorder)
         case
-        when (type === :preorder or type = :depth_first)
+        when (type === :preorder or type === :depth_first)
           yield self.root, 0
           index = 1
           recursive_preorder_loop(self.root) do |node|
@@ -41,6 +43,7 @@ module Kaninchen
           recursive_preorder_loop(child_node) { |node| yield node }
         end
       end
+
     end
 
     class Node
