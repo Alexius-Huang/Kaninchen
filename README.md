@@ -106,7 +106,8 @@ Chained `#<<` method:
 ```ruby
 # Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
 # are Kaninchen::DataStructure::Node type
-tree << n1 << n2 << n3
+
+tree.root << n1 << n2 << n3
 tree.root.children.size      # -> 3
 tree.root.children[0] === n1 # -> true
 tree.root.children[1] === n2 # -> true
@@ -121,7 +122,7 @@ Array of nodes case:
 ```ruby
 # Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
 # are Kaninchen::DataStructure::Node type
-tree << [n1, n2, n3]
+tree.root << [n1, n2, n3]
 tree.root.children.size      # -> 3
 tree.root.children[0] === n1 # -> true
 tree.root.children[1] === n2 # -> true
@@ -130,6 +131,59 @@ n1.parent === tree.root      # -> true
 n2.parent === tree.root      # -> true
 n3.parent === tree.root      # -> true
 ```
+
+Hash of nodes case:
+```ruby
+# Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
+# are Kaninchen::DataStructure::Node type
+tree.node << { n1 => n2, n3 => nil }
+tree.root.children.size                  # -> 2
+tree.root.children[0] === n1             # -> true
+tree.root.children[1] === n3             # -> true
+tree.root.children[0].size               # -> 1
+tree.root.children[1].size               # -> 0
+tree.root.children[0].children.size      # -> 1
+tree.root.children[0].children[0] === n2 # -> true
+n1.parent === tree.root                  # -> true 
+n2.parent === n1                         # -> true
+n3.parent === tree.root                  # -> true
+```
+
+Mixed structure case (array and hash composition):
+```ruby
+# Assume tree is the Kaninchen::DataStructure::Tree type and n1, n2, n3
+# n4, n5 are Kaninchen::DataStructure::Node type
+tree.node << [n1, { n2 => [n3, n4], { n5 => nil } }]
+
+# Tree Structure:
+# ROOT ---> n1
+#       |-> n2 ---> n3
+#       |       |-> n4
+#       |-> n5
+#
+```
+
+### Tree Node Order & Traversal
+
+*Currently only support the `preorder` (or `depth_first`) type of order*
+
+- `Tree#nodes`: Default returns an array of `Node` type objects which represents the preorder of the tree nodes
+- `Tree#node_values`: Default returns an array of `Node` type objects' values which represents the preorder of the tree nodes
+- `Tree#each_node`: Default iterates the tree nodes in preorder format which requires a given block
+- `Tree#each_node_with_index`: Default iterates the tree nodes with index specified in preorder format which requires a given block
+
+
+### Properties of Tree
+
+- `Tree#height`: The height of the tree
+- `Tree#leaves`: The leaves of the tree
+
+### Properties of Tree Nodes
+
+- `Node#degree`: The degree of the tree node (which is the count of the subtrees of the node)
+- `Node#depth`: The depth of the tree node (which is the distance between the node and the tree root of the node)
+- `Node#height`: The height of the tree node (which is the longest path to the leaves of the subtree of the node)
+- `Node#subtree`: Returns the new tree type object which is the subtree of the node
 
 ## Development
 
