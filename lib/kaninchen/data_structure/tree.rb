@@ -24,6 +24,11 @@ module Kaninchen
           params.send(:set_tree_node_data, tree: self.tree, parent: self)
           set_tree_node_data(children: @children.push(params))
         when params.is_a?(Array) then params.each { |node| self << node }
+        when params.is_a?(Hash)
+          params.each_pair do |key, value|
+            self << key
+            key << value if key.is_a? Kaninchen::DataStructure::Node
+          end
         end
         self
       end
@@ -36,9 +41,9 @@ module Kaninchen
 
       def set_tree_node_data(params)
         @type     = :tree
-        @tree     = params[:tree]
-        @parent   = params[:parent]
-        @children = params[:children] || []
+        @tree     ||= params[:tree]
+        @parent   ||= params[:parent]
+        @children ||= params[:children] || []
       end
     end
   end
