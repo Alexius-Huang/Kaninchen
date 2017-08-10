@@ -105,9 +105,8 @@ RSpec.describe Kaninchen::DataStructure::Tree do
       end
 
       context '#nodes' do
-        it 'should return a hash structure of tree nodes by default' do
-          tree.root << sample_tree_struct
-          expect(tree.nodes).to eq({
+        let(:hash_struct) do
+          {
             tree.root => {
               node_1 => {
                 node_2 => nil,
@@ -124,19 +123,35 @@ RSpec.describe Kaninchen::DataStructure::Tree do
                 node_10 => nil
               }
             }
-          })
+          }
+        end
+        let(:preorder_nodes) { [tree.root, node_1, node_2, node_3, node_4, node_5, node_6, node_7, node_8, node_9, node_10] }
+
+        before { tree.root << sample_tree_struct }
+
+        it 'should return a hash structure of tree nodes by default' do
+          expect(tree.nodes).to eq hash_struct
         end
 
-        it 'should return array of nodes preorder if specified :preorder or :depth_first'
+        shared_examples '#nodes in different case' do |params|
+          it "should return array of nodes in #{params[:type]} if specified #{params[:input]}" do
+            order_array = case params[:type]
+                          when :preorder then preorder_nodes
+                          end
+            expect(tree.nodes(params[:input])).to eq order_array
+          end
+        end
+
+        it_should_behave_like '#nodes in different case', type: :preorder, input: :preorder
+        it_should_behave_like '#nodes in different case', type: :preorder, input: :depth_first
         it 'should return array of nodes inorder if specified :inorder'
         it 'should return array of nodes postorder if specified :postorder'
         it 'should return array of nodes levelorder if specified :levelorder or :breath_first'
       end
 
       context '#node_values' do
-        it 'should return a hash structure of tree node values by default' do
-          tree.root << sample_tree_struct
-          expect(tree.node_values).to eq({
+        let(:hash_struct) do
+          {
             'ROOT' => {
               'CHILD1' => {
                 'CHILD2' => nil,
@@ -153,10 +168,27 @@ RSpec.describe Kaninchen::DataStructure::Tree do
                 'CHILD10' => nil
               }
             }
-          })
+          }
+        end
+        let(:preorder_values) { ['ROOT', 'CHILD1', 'CHILD2', 'CHILD3', 'CHILD4', 'CHILD5', 'CHILD6', 'CHILD7', 'CHILD8', 'CHILD9', 'CHILD10'] }
+
+        before { tree.root << sample_tree_struct }
+
+        it 'should return a hash structure of tree node values by default' do
+          expect(tree.node_values).to eq hash_struct
         end
 
-        it 'should return array of nodes preorder if specified :preorder or :depth_first'
+        shared_examples '#node_values in different case' do |params|
+          it "should return array of nodes in #{params[:type]} if specified #{params[:input]}" do
+            order_array = case params[:type]
+                          when :preorder then preorder_values
+                          end
+            expect(tree.node_values(params[:input])).to eq order_array
+          end
+        end
+
+        it_should_behave_like '#node_values in different case', type: :preorder, input: :preorder
+        it_should_behave_like '#node_values in different case', type: :preorder, input: :depth_first
         it 'should return array of nodes inorder if specified :inorder'
         it 'should return array of nodes postorder if specified :postorder'
         it 'should return array of nodes levelorder if specified :levelorder or :breath_first'
