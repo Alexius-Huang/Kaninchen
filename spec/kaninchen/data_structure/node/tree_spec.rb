@@ -16,7 +16,6 @@ RSpec.describe Kaninchen::DataStructure::Node do
     }
   end
 
-
   describe 'tree node properties' do
     before { tree.root << sample_tree_struct }
     context '#degree' do
@@ -77,6 +76,38 @@ RSpec.describe Kaninchen::DataStructure::Node do
         expect(node_8.height).to be 2
         expect(node_9.height).to be 1
         expect(node_10.height).to be 1
+      end
+    end
+
+    context '#left_child' do
+      it 'should return the left child of the node' do
+        expect(tree.root.left_child).to be node_1
+        expect(node_1.left_child).to be node_2
+        expect(node_2.left_child).to be nil
+        expect(node_3.left_child).to be nil
+        expect(node_4.left_child).to be nil
+        expect(node_5.left_child).to be node_6
+        expect(node_6.left_child).to be nil
+        expect(node_7.left_child).to be node_8
+        expect(node_8.left_child).to be node_9
+        expect(node_9.left_child).to be nil
+        expect(node_10.left_child).to be nil
+      end
+    end
+
+    context '#right_child' do
+      it 'should return the right child of the node' do
+        expect(tree.root.right_child).to be node_4
+        expect(node_1.right_child).to be node_3
+        expect(node_2.right_child).to be nil
+        expect(node_3.right_child).to be nil
+        expect(node_4.right_child).to be nil
+        expect(node_5.right_child).to be nil
+        expect(node_6.right_child).to be nil
+        expect(node_7.right_child).to be node_10
+        expect(node_8.right_child).to be nil
+        expect(node_9.right_child).to be nil
+        expect(node_10.right_child).to be nil
       end
     end
   end
