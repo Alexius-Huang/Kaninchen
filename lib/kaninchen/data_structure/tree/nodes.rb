@@ -4,19 +4,20 @@ module Kaninchen
   module DataStructure
     class Tree
       def nodes(type = nil)
-        case
-        when type.nil? then { self.root => recursive_get_struct(self.root) }
-        when %i(preorder depth_first).include?(type)
+        if type.nil?
+          { self.root => recursive_get_struct(self.root) }
+        else
           result = []
-          self.each_node { |node| result.push(node) }
+          each_node(type) { |node| result.push(node) }
           result
         end
       end
 
       def node_values(type = nil)
-        case
-        when type.nil? then { self.root.value => recursive_get_struct_value(self.root) }
-        when %i(preorder depth_first).include?(type) then nodes(:preorder).map(&:value)
+        if type.nil?
+          { self.root.value => recursive_get_struct_value(self.root) }
+        else
+          nodes(type).map(&:value)
         end
       end
 

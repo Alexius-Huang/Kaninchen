@@ -30,6 +30,14 @@ module Kaninchen
         self.children.size
       end
 
+      def left_child
+        self.degree.zero? ? nil : self.children[0]
+      end
+
+      def right_child
+        self.degree < 2 ? nil : self.children[1]
+      end
+
       def depth
         count = 1
         current_node = self
@@ -58,6 +66,18 @@ module Kaninchen
           new_node << new_child_node
           recursive_attach_subtree_nodes(new_child_node, origin_child_node)
         end
+      end
+
+      # Right children is for the n-ary but not for the binary-tree system
+      # which will be served as private method due to the needs of the
+      # implementation of traversal
+      def right_children
+        self.degree < 2 ? [] : self.children[1..-1]
+      end
+
+      def left_most_child(node = self)
+        node = node.left_child until node.left_child.nil?
+        node
       end
     end
   end
