@@ -4,17 +4,8 @@ require 'spec_helper'
 
 RSpec.describe Kaninchen::DataStructure::Tree do
   let(:tree)    { described_class.new 'ROOT' }
-  let(:root)    { Kaninchen::DataStructure::Node.new 'ROOT'    }
-  let(:node_1)  { Kaninchen::DataStructure::Node.new 'CHILD1'  }
-  let(:node_2)  { Kaninchen::DataStructure::Node.new 'CHILD2'  }
-  let(:node_3)  { Kaninchen::DataStructure::Node.new 'CHILD3'  }
-  let(:node_4)  { Kaninchen::DataStructure::Node.new 'CHILD4'  }
-  let(:node_5)  { Kaninchen::DataStructure::Node.new 'CHILD5'  }
-  let(:node_6)  { Kaninchen::DataStructure::Node.new 'CHILD6'  }
-  let(:node_7)  { Kaninchen::DataStructure::Node.new 'CHILD7'  }
-  let(:node_8)  { Kaninchen::DataStructure::Node.new 'CHILD8'  }
-  let(:node_9)  { Kaninchen::DataStructure::Node.new 'CHILD9'  }
-  let(:node_10) { Kaninchen::DataStructure::Node.new 'CHILD10' }
+  let(:root)    { Kaninchen::DataStructure::Node.new 'ROOT' }
+  1.upto(10) { |index| let(:"node_#{index}") { Kaninchen::DataStructure::Node.new "CHILD#{index}" } }
   let(:sample_tree_struct) do
     {
       node_1 => [node_2, node_3],
@@ -94,6 +85,8 @@ RSpec.describe Kaninchen::DataStructure::Tree do
     end
 
     describe 'tree properties' do
+      before { tree.root << sample_tree_struct }
+
       context '#root' do
         it 'returns the root node' do
           root = tree.root
@@ -126,8 +119,6 @@ RSpec.describe Kaninchen::DataStructure::Tree do
           }
         end
         let(:preorder_nodes) { [tree.root, node_1, node_2, node_3, node_4, node_5, node_6, node_7, node_8, node_9, node_10] }
-
-        before { tree.root << sample_tree_struct }
 
         it 'should return a hash structure of tree nodes by default' do
           expect(tree.nodes).to eq hash_struct
@@ -172,8 +163,6 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         end
         let(:preorder_values) { ['ROOT', 'CHILD1', 'CHILD2', 'CHILD3', 'CHILD4', 'CHILD5', 'CHILD6', 'CHILD7', 'CHILD8', 'CHILD9', 'CHILD10'] }
 
-        before { tree.root << sample_tree_struct }
-
         it 'should return a hash structure of tree node values by default' do
           expect(tree.node_values).to eq hash_struct
         end
@@ -194,20 +183,17 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it 'should return array of nodes levelorder if specified :levelorder or :breath_first'
       end
 
+
       context '#leaves' do
-        it 'should return an array of leaves of the tree'
-      end
-
-      context '#degree' do
-        it 'should return the degree of the tree (which is the degree of root)'
-      end
-
-      context '#edges' do
-        it 'should return the count of the edges of the tree'
+        it 'should return an array of leaves of the tree' do
+          expect(tree.leaves).to eq [node_2, node_3, node_4, node_6, node_9, node_10]
+        end
       end
 
       context '#height' do
-        it 'should return the height of the tree'
+        it 'should return the height of the tree' do
+          expect(tree.height).to be 4
+        end
       end
     end
   end

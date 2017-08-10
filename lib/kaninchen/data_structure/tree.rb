@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require 'kaninchen/data_structure/tree/properties'
 require 'kaninchen/data_structure/tree/nodes'
+require 'kaninchen/data_structure/tree/each_node'
 
 module Kaninchen
   module DataStructure
@@ -14,36 +16,6 @@ module Kaninchen
         end
         @root.send(:set_tree_node_data, tree: self)
       end
-
-      def each_node(type = :preorder)
-        case type
-        when :preorder
-          yield self.root
-          recursive_preorder_loop(self.root) { |node| yield node }
-        end
-      end
-
-      def each_node_with_index(type = :preorder)
-        case
-        when (type === :preorder or type === :depth_first)
-          yield self.root, 0
-          index = 1
-          recursive_preorder_loop(self.root) do |node|
-            yield node, index
-            index += 1
-          end
-        end
-      end
-
-      private
-
-      def recursive_preorder_loop(parent_node)
-        parent_node.children.each do |child_node|
-          yield child_node
-          recursive_preorder_loop(child_node) { |node| yield node }
-        end
-      end
-
     end
 
     class Node
