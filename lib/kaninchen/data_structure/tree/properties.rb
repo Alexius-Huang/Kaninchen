@@ -30,6 +30,16 @@ module Kaninchen
         self.children.size
       end
 
+      def path
+        node = self
+        arr = [node]
+        until node.root?
+          node = node.parent
+          arr << node
+        end
+        arr
+      end
+
       def left_child
         self.degree.zero? ? nil : self.children[0]
       end

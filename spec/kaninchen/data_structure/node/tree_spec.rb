@@ -34,6 +34,22 @@ RSpec.describe Kaninchen::DataStructure::Node do
       end
     end
 
+    context '#path' do
+      it 'should return array of node to the root node represents the path' do
+        expect(tree.root.path).to eq [tree.root]
+        expect(node_1.path).to eq [node_1, tree.root]
+        expect(node_2.path).to eq [node_2, node_1, tree.root]
+        expect(node_3.path).to eq [node_3, node_1, tree.root]
+        expect(node_4.path).to eq [node_4, tree.root]
+        expect(node_5.path).to eq [node_5, tree.root]
+        expect(node_6.path).to eq [node_6, node_5, tree.root]
+        expect(node_7.path).to eq [node_7, tree.root]
+        expect(node_8.path).to eq [node_8, node_7, tree.root]
+        expect(node_9.path).to eq [node_9, node_8, node_7, tree.root]
+        expect(node_10.path).to eq [node_10, node_7, tree.root]
+      end
+    end
+
     context '#depth' do
       it 'should return the depth of the tree node (which is the distance between root node and the node)' do
         expect(tree.root.depth).to be 1
