@@ -16,6 +16,11 @@ module Kaninchen
         end
         @root.send(:set_tree_node_data, tree: self)
       end
+
+      def to_s
+        "<Tree root=\"#{root}\" height=\"#{height}\">"
+      end
+      alias :inspect :to_s
     end
 
     class Node

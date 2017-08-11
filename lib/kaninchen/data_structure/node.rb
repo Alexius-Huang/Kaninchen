@@ -18,6 +18,16 @@ module Kaninchen
         @type.nil?
       end
 
+      def to_s
+        case @type
+        when nil
+          "<NilNode value=\"#{value}\">"
+        when :tree
+          "<TreeNode value=\"#{value}\" depth=\"#{depth}\" level=\"#{level}\" degree=\"#{degree}\">"
+        end
+      end
+      alias :inspect :to_s
+
       class << self
         def node_type(type)
           define_method "#{type}_node?" do
