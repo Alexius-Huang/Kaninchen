@@ -59,6 +59,8 @@ empty_stack.pop!
 
 ## Tree
 
+![Kaninchen Tree](readme_img/kaninchen_tree.png)
+
 ### Basic Usage
 
 ```ruby
@@ -165,13 +167,19 @@ tree.node << [n1, { n2 => [n3, n4], { n5 => nil } }]
 
 ### Tree Node Order & Traversal
 
-*Currently only support the `preorder` (or `depth_first`) type of order*
+Available methods associated with tree node order and traversal is listed below:
 
 - `Tree#nodes`: Default returns an array of `Node` type objects which represents the preorder of the tree nodes
 - `Tree#node_values`: Default returns an array of `Node` type objects' values which represents the preorder of the tree nodes
 - `Tree#each_node`: Default iterates the tree nodes in preorder format which requires a given block
 - `Tree#each_node_with_index`: Default iterates the tree nodes with index specified in preorder format which requires a given block
 
+These methods can pass in optional parameter, when pass in:
+
+- `:preorder` or `:depth_first`: Preorder mode
+- `:inorder`: Inorder mode
+- `:postorder`: Postorder mode
+- `:levelorder` or `:breadth_first`: Level order mode
 
 ### Properties of Tree
 
@@ -180,10 +188,17 @@ tree.node << [n1, { n2 => [n3, n4], { n5 => nil } }]
 
 ### Properties of Tree Nodes
 
+- `Node#type`: Returns the symbol object `:tree`
 - `Node#degree`: The degree of the tree node (which is the count of the subtrees of the node)
 - `Node#depth`: The depth of the tree node (which is the distance between the node and the tree root of the node)
 - `Node#height`: The height of the tree node (which is the longest path to the leaves of the subtree of the node)
 - `Node#subtree`: Returns the new tree type object which is the subtree of the node
+- `Node#path`: Returns the path from the node to the root node as an array
+- `Node#parent`: Returns the parent node of the node
+- `Node#children`: Returns the child nodes of the node
+- `Node#left_child`: Returns the left child node of the node
+- `Node#right_child`: Returns the right child node of the node. (If there are over two children, it will return the second child node in default)
+- `Node#leaf?`: Returns `true` if the node is the leaf of the tree
 
 ## Development
 
