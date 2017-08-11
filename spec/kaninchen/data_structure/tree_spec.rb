@@ -42,6 +42,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
       context '#each_node & #each_node_with_index' do
         let(:preorder)   { [tree.root, node_1, node_2, node_3, node_4, node_5, node_6, node_7, node_8, node_9, node_10] }
         let(:inorder)    { [node_2, node_1, node_3, tree.root, node_4, node_6, node_5, node_9, node_8, node_7, node_10] }
+        let(:postorder)  { [node_2, node_3, node_1, node_4, node_6, node_5, node_9, node_8, node_10, node_7, tree.root] }
         let(:levelorder) { [tree.root, node_1, node_4, node_5, node_7, node_2, node_3, node_6, node_8, node_10, node_9] }
 
         before { tree.root << sample_tree_struct }
@@ -51,6 +52,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
             order = case params[:type]
                     when :preorder   then preorder
                     when :inorder    then inorder
+                    when :postorder  then postorder
                     when :levelorder then levelorder
                     end
 
@@ -77,10 +79,9 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it_should_behave_like '#each_node', type: :preorder,   input: :preorder
         it_should_behave_like '#each_node', type: :preorder,   input: :depth_first
         it_should_behave_like '#each_node', type: :inorder,    input: :inorder
+        it_should_behave_like '#each_node', type: :postorder,  input: :postorder
         it_should_behave_like '#each_node', type: :levelorder, input: :levelorder
         it_should_behave_like '#each_node', type: :levelorder, input: :breadth_first
-        
-        it 'should loop through tree specified :postorder as postorder-traversal'
       end
 
       context '#each_leaf' do
@@ -124,6 +125,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         end
         let(:preorder_nodes)   { [tree.root, node_1, node_2, node_3, node_4, node_5, node_6, node_7, node_8, node_9, node_10] }
         let(:inorder_nodes)    { [node_2, node_1, node_3, tree.root, node_4, node_6, node_5, node_9, node_8, node_7, node_10] }
+        let(:postorder_nodes)  { [node_2, node_3, node_1, node_4, node_6, node_5, node_9, node_8, node_10, node_7, tree.root] }
         let(:levelorder_nodes) { [tree.root, node_1, node_4, node_5, node_7, node_2, node_3, node_6, node_8, node_10, node_9] } 
 
         it 'should return a hash structure of tree nodes by default' do
@@ -135,6 +137,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
             order_array = case params[:type]
                           when :preorder   then preorder_nodes
                           when :inorder    then inorder_nodes
+                          when :postorder  then postorder_nodes
                           when :levelorder then levelorder_nodes
                           end
             expect(tree.nodes(params[:input])).to eq order_array
@@ -144,9 +147,9 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it_should_behave_like '#nodes in different case', type: :preorder,   input: :preorder
         it_should_behave_like '#nodes in different case', type: :preorder,   input: :depth_first
         it_should_behave_like '#nodes in different case', type: :inorder,    input: :inorder
+        it_should_behave_like '#nodes in different case', type: :postorder,  input: :postorder
         it_should_behave_like '#nodes in different case', type: :levelorder, input: :levelorder
         it_should_behave_like '#nodes in different case', type: :levelorder, input: :breadth_first
-        it 'should return array of nodes postorder if specified :postorder'
       end
 
       context '#node_values' do
@@ -172,6 +175,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         end
         let(:preorder_values)   { ['ROOT', 'CHILD1', 'CHILD2', 'CHILD3', 'CHILD4', 'CHILD5', 'CHILD6', 'CHILD7', 'CHILD8', 'CHILD9', 'CHILD10'] }
         let(:inorder_values)    { ['CHILD2', 'CHILD1', 'CHILD3', 'ROOT', 'CHILD4', 'CHILD6', 'CHILD5', 'CHILD9', 'CHILD8', 'CHILD7', 'CHILD10'] }
+        let(:postorder_values)  { ['CHILD2', 'CHILD3', 'CHILD1', 'CHILD4', 'CHILD6', 'CHILD5', 'CHILD9', 'CHILD8', 'CHILD10', 'CHILD7', 'ROOT'] }
         let(:levelorder_values) { ['ROOT', 'CHILD1', 'CHILD4', 'CHILD5', 'CHILD7', 'CHILD2', 'CHILD3', 'CHILD6', 'CHILD8', 'CHILD10', 'CHILD9'] } 
 
         it 'should return a hash structure of tree node values by default' do
@@ -183,6 +187,7 @@ RSpec.describe Kaninchen::DataStructure::Tree do
             order_array = case params[:type]
                           when :preorder   then preorder_values
                           when :inorder    then inorder_values
+                          when :postorder  then postorder_values
                           when :levelorder then levelorder_values
                           end
             expect(tree.node_values(params[:input])).to eq order_array
@@ -192,9 +197,9 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it_should_behave_like '#node_values in different case', type: :preorder,   input: :preorder
         it_should_behave_like '#node_values in different case', type: :preorder,   input: :depth_first
         it_should_behave_like '#node_values in different case', type: :inorder,    input: :inorder
+        it_should_behave_like '#node_values in different case', type: :postorder,  input: :postorder
         it_should_behave_like '#node_values in different case', type: :levelorder, input: :levelorder
         it_should_behave_like '#node_values in different case', type: :levelorder, input: :breadth_first
-        it 'should return array of nodes postorder if specified :postorder'
       end
 
 

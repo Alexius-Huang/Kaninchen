@@ -162,6 +162,24 @@ RSpec.describe Kaninchen::DataStructure::Node do
       end
     end
 
+    context '#leaf?' do
+      before { tree.root << sample_tree_struct }
+
+      it 'should returns true if the node is a leaf' do
+        expect(tree.root.leaf?).to be_falsey
+        expect(node_1.leaf?).to be_falsey
+        expect(node_2.leaf?).to be_truthy
+        expect(node_3.leaf?).to be_truthy
+        expect(node_4.leaf?).to be_truthy
+        expect(node_5.leaf?).to be_falsey
+        expect(node_6.leaf?).to be_truthy
+        expect(node_7.leaf?).to be_falsey
+        expect(node_8.leaf?).to be_falsey
+        expect(node_9.leaf?).to be_truthy
+        expect(node_10.leaf?).to be_truthy
+      end
+    end
+
     context '#<<' do
       let(:nodes_array) do
         [1, 2, 3].map { |index| described_class.new("node #{index}") }

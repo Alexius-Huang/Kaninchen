@@ -10,6 +10,8 @@ module Kaninchen
           recursive_preorder_loop(self.root) { |node| yield node }
         when type === :inorder
           recursive_inorder_loop(first_leaf, :left_most) { |node| yield node }
+        when type === :postorder
+          recursive_postorder_loop(self.root) { |node| yield node }
         when %i[levelorder breadth_first].include?(type)
           yield self.root
           recursive_levelorder_loop(self.root) { |node| yield node }
@@ -47,6 +49,16 @@ module Kaninchen
             recursive_inorder_loop(left_most_child, :left_most, end_node = node) { |n| yield n }
           end
         end
+      end
+
+      def recursive_postorder_loop(node)
+        unless node.leaf?
+          recursive_postorder_loop(node.left_child) { |n| yield n }
+          node.send(:right_children).each do |child_node|
+            recursive_postorder_loop(child_node) { |n| yield n }
+          end
+        end
+        yield node
       end
 
       def recursive_levelorder_loop(node)

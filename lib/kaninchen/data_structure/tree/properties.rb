@@ -72,6 +72,10 @@ module Kaninchen
         self.subtree.height
       end
 
+      def leaf?
+        self.children.empty?
+      end
+
       private
 
       def recursive_attach_subtree_nodes(new_node, origin_node)

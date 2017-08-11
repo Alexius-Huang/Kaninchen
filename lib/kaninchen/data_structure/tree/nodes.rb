@@ -8,7 +8,8 @@ module Kaninchen
           { self.root => recursive_get_struct(self.root) }
         else
           result = []
-          each_node(type) { |node| result.push(node) }
+          # byebug
+          each_node(type) { |node|  result.push(node) }
           result
         end
       end
