@@ -49,13 +49,17 @@ module Kaninchen
       end
 
       def depth
-        count = 1
+        count = 0
         current_node = self
         until current_node.root?
           count += 1
           current_node = current_node.parent          
         end
         count
+      end
+
+      def level
+        depth + 1
       end
 
       def subtree

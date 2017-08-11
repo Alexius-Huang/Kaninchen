@@ -52,17 +52,33 @@ RSpec.describe Kaninchen::DataStructure::Node do
 
     context '#depth' do
       it 'should return the depth of the tree node (which is the distance between root node and the node)' do
-        expect(tree.root.depth).to be 1
-        expect(node_1.depth).to be 2
-        expect(node_2.depth).to be 3
-        expect(node_3.depth).to be 3
-        expect(node_4.depth).to be 2
-        expect(node_5.depth).to be 2
-        expect(node_6.depth).to be 3
-        expect(node_7.depth).to be 2
-        expect(node_8.depth).to be 3
-        expect(node_9.depth).to be 4
-        expect(node_10.depth).to be 3
+        expect(tree.root.depth).to be 0
+        expect(node_1.depth).to be 1
+        expect(node_2.depth).to be 2
+        expect(node_3.depth).to be 2
+        expect(node_4.depth).to be 1
+        expect(node_5.depth).to be 1
+        expect(node_6.depth).to be 2
+        expect(node_7.depth).to be 1
+        expect(node_8.depth).to be 2
+        expect(node_9.depth).to be 3
+        expect(node_10.depth).to be 2
+      end
+    end
+
+    context '#level' do
+      it 'should return the level of the tree node (which is defined by node\'s depth + 1)' do
+        expect(tree.root.level).to be 1
+        expect(node_1.level).to be 2
+        expect(node_2.level).to be 3
+        expect(node_3.level).to be 3
+        expect(node_4.level).to be 2
+        expect(node_5.level).to be 2
+        expect(node_6.level).to be 3
+        expect(node_7.level).to be 2
+        expect(node_8.level).to be 3
+        expect(node_9.level).to be 4
+        expect(node_10.level).to be 3
       end
     end
 
