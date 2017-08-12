@@ -20,6 +20,31 @@ RSpec.describe Kaninchen::DataStructure::Stack do
     end
   end
 
+  describe 'stack properties' do
+    context '#empty?' do
+      it 'should return true if stack is empty' do
+        expect(stack.empty?).to be_truthy
+      end
+
+      it 'should return false if stack is not empty' do
+        stack << 123
+        expect(stack.empty?).to be_falsey
+      end
+    end
+
+    context '#size' do
+      it 'should return size of the stack' do
+        expect(stack.size).to be_zero
+        stack << 1 << 2 << 3
+        expect(stack.size).to eq 3
+        stack << 4 << 5 << 6
+        expect(stack.size).to eq 6
+        stack << 7 << 8 << 9 << 10
+        expect(stack.size).to eq 10
+      end
+    end
+  end
+
   describe 'instance methods' do
     context 'pushing into stack instance' do
       context '#<<' do
@@ -63,7 +88,7 @@ RSpec.describe Kaninchen::DataStructure::Stack do
       end
     end
 
-    context 'poping items from stack' do
+    context 'popping items from stack' do
       context '#pop' do
         it 'can pop out items from stack and returns the popped value' do
           stack << 123 << 'abc' << true
@@ -100,30 +125,10 @@ RSpec.describe Kaninchen::DataStructure::Stack do
         end
       end
     end
-
-    describe 'stack properties' do
-      context '#empty?' do
-        it 'should return true if stack is empty' do
-          expect(stack.empty?).to be_truthy
-        end
-
-        it 'should return false if stack is not empty' do
-          stack << 123
-          expect(stack.empty?).to be_falsey
-        end
-      end
-
-      context '#size' do
-        it 'should return size of the stack' do
-          expect(stack.size).to be_zero
-          stack << 1 << 2 << 3
-          expect(stack.size).to eq 3
-          stack << 4 << 5 << 6
-          expect(stack.size).to eq 6
-          stack << 7 << 8 << 9 << 10
-          expect(stack.size).to eq 10
-        end
-      end
+    
+    context '#accept_only' do
+      it 'should enables the stack to accept specific data type of value'
+      it 'should enables the stack to accept specific data types of value with array'
     end
   end
 end

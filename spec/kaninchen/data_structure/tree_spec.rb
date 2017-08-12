@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Kaninchen::DataStructure::Tree do
-  let(:tree)    { described_class.new 'ROOT' }
-  let(:root)    { Kaninchen::DataStructure::Node.new 'ROOT' }
+  let(:tree) { described_class.new 'ROOT' }
+  let(:root) { Kaninchen::DataStructure::Node.new 'ROOT' }
   1.upto(10) { |index| let(:"node_#{index}") { Kaninchen::DataStructure::Node.new "CHILD#{index}" } }
   let(:sample_tree_struct) do
     {
@@ -202,7 +202,6 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it_should_behave_like '#node_values in different case', type: :levelorder, input: :breadth_first
       end
 
-
       context '#leaves' do
         it 'should return an array of leaves of the tree' do
           expect(tree.leaves).to eq [node_2, node_3, node_4, node_6, node_9, node_10]
@@ -213,6 +212,33 @@ RSpec.describe Kaninchen::DataStructure::Tree do
         it 'should return the height of the tree' do
           expect(tree.height).to be 4
         end
+      end
+
+      context '#freeze' do
+        it 'should freeze the tree which nodes cannot be modified, deleted and append'
+      end
+
+      context '#frozen?' do
+        it 'should return true if the tree is frozen'
+      end
+
+      context '#accept_only' do
+        it 'should enables the tree to accept specific data type of value'
+        it 'should enables the tree to accept specific data types of value with array'
+      end
+
+      context '#dup' do
+        it 'duplicates an entire new tree'
+        it 'does not preserve the frozen state'
+      end
+
+      context '#clone' do
+        it 'clones an entire new tree'
+        it 'does preserve the frozen state'
+      end
+
+      context '#deep_eql?' do
+        it 'compares only tree\'s value and node structure but not object identity'
       end
     end
   end

@@ -10,4 +10,8 @@ RSpec.describe Kaninchen do
   it 'can fetch the version number' do
     expect(described_class.version).to eq described_class::VERSION
   end
+
+  describe 'data_structure module' do
+    it 'can enable the data structure extension'
+  end
 end
